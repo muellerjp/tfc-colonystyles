@@ -1,0 +1,14 @@
+# Build output
+/dist/
+RELEASE_NOTES.md
+
+# Python
+__pycache__/
+*.pyc
+
+# VS Code
+/.vscode/
+
+# Mac / Windows cruft
+**/.DS_Store
+**/Thumbs.db

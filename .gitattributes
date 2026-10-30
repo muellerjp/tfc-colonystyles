@@ -1,0 +1,5 @@
+# Blueprints are gzip-compressed NBT: never diff or change line endings
+*.blueprint binary
+
+# Normalise line endings for text files checked in to the repo
+* text=auto eol=lf

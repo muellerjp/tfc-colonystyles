@@ -1,0 +1,79 @@
+name: Bug Report
+description: A blueprint is broken, missing blocks, or does not build correctly.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing a bug, make sure the problem comes from this structure pack.
+        If it also happens with other packs, report it to MineColonies, Structurize or TFC directly.
+
+  - type: input
+    id: mc_version
+    attributes:
+      label: Minecraft version
+      placeholder: "1.21.1"
+    validations:
+      required: true
+
+  - type: input
+    id: minecolonies_version
+    attributes:
+      label: MineColonies version
+    validations:
+      required: true
+
+  - type: input
+    id: structurize_version
+    attributes:
+      label: Structurize version
+    validations:
+      required: true
+
+  - type: input
+    id: tfc_version
+    attributes:
+      label: TerraFirmaCraft version
+    validations:
+      required: true
+
+  - type: input
+    id: pack_version
+    attributes:
+      label: Structure pack version
+    validations:
+      required: true
+
+  - type: input
+    id: blueprint
+    attributes:
+      label: Affected blueprint(s)
+      placeholder: "Agriculture/Farmer3"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: What did you expect to happen, and what happened instead? Screenshots help a lot.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Paste relevant lines from `latest.log` or a crash report.
+      render: text

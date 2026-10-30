@@ -1,0 +1,69 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Get version from tag
+        id: version
+        run: echo "version=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate release notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: cliff.toml
+          args: --verbose --current --strip all
+        env:
+          OUTPUT: RELEASE_NOTES.md
+          GITHUB_REPO: ${{ github.repository }}
+
+      - name: Validate and build pack
+        run: python tools/pack.py build --version "${{ steps.version.outputs.version }}"
+
+      # Needs the repo variable CURSEFORGE_PROJECT_ID and the secret CURSEFORGE_API_KEY
+      # (Settings > Secrets and variables > Actions).
+      - name: Publish to CurseForge and GitHub
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1774795
+          curseforge-token: ${{ secrets.CURSEFORGE_API_KEY }}
+
+          github-tag: ${{ github.ref }}
+          github-draft: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+          files: dist/TFCColonyStyles-${{ steps.version.outputs.version }}.jar
+          name: TFC Colony Styles ${{ steps.version.outputs.version }}
+          version: ${{ steps.version.outputs.version }}
+
+          java: 21
+          loaders: |
+            neoforge
+          game-versions: |
+            1.21.1
+          # CurseForge project slugs
+          dependencies: |
+            minecolonies(required)
+            structurize(required)
+            terrafirmacraft(required)
+            macaws-roofs(required)
+          changelog-file: RELEASE_NOTES.md

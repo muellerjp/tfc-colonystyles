@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Get version
+        id: version
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "0.0.0")
+          HASH=$(git rev-parse --short HEAD)
+          echo "version=${TAG#v}-SNAPSHOT-${HASH}" >> "$GITHUB_OUTPUT"
+
+      - name: Validate and build pack
+        run: python tools/pack.py build --version "${{ steps.version.outputs.version }}"
+
+      - name: Upload pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: TFCColonyStyles-${{ steps.version.outputs.version }}
+          path: dist/TFCColonyStyles-${{ steps.version.outputs.version }}.jar

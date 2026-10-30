@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: MineColonies bug tracker
+    about: Bugs in MineColonies itself (not related to this structure pack)
+    url: https://github.com/ldtteam/minecolonies/issues/new/choose
+  - name: Structurize bug tracker
+    about: Bugs in Structurize itself
+    url: https://github.com/ldtteam/Structurize/issues/new/choose
+  - name: TerraFirmaCraft bug tracker
+    about: Bugs in TerraFirmaCraft itself
+    url: https://github.com/TerraFirmaCraft/TerraFirmaCraft/issues/new/choose
