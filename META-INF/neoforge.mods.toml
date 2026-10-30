@@ -15,7 +15,7 @@ issueTrackerURL = "https://github.com/muellerjp/tfc-colonystyles/issues"
     displayURL = "https://www.curseforge.com/minecraft/mc-mods/tfc-colonystyles"
     displayTest="IGNORE_SERVER_VERSION"
     logoFile = "logo.png"
-    description = ""
+    description = "A collection of TFC-ready colony styles."
 
 [[dependencies.tfccolonystyles]]
     modId = "neoforge"
